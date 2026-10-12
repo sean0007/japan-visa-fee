@@ -83,5 +83,6 @@ Educational estimate, not immigration or legal advice. ISA decides the period gr
 ## Other free tools by the same maker
 - Japan Tax-Free Refund Checker: https://japan-tax-free-refund.vercel.app
 - Japan Trip Brain: https://japan-trip-brain.vercel.app
+- Japan Luggage Check: https://japan-luggage.vercel.app
 - Hotel OTA Calculator: https://hotel-ota-calculator.vercel.app
 - Free Agent Tools MCP: https://free-agent-tools.vercel.app
