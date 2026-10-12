@@ -1,20 +1,66 @@
 import type { Metadata } from "next";
 import { Calculator } from "@/components/calculator";
 import { FaqSection, type FaqItem } from "@/components/faq-section";
-import { TIERS } from "@/lib/fees";
+import { PERMANENT, SOURCES, TIERS } from "@/lib/fees";
 import { EXAMPLE_SHARED, PUBLIC_URL, resultPath, yen } from "@/lib/share";
 
-const title = "How much is a Japan visa renewal from October 2026?";
+const title = "Japan visa fee calculator 2026: residence permit renewal, change of status and permanent residence fees";
 const description =
-  "Free Japan visa fee calculator for the October 1, 2026 revision: period-of-stay extension and change of status ¥10,000–¥75,000 by period granted (1 year ¥33,000 at the counter, ¥27,330 online), permanent residence ¥200,000. Revenue stamps, employer totals, free JSON API for AI agents. Not legal advice.";
+  "Japan visa fee calculator for residence permits, free, for the October 1, 2026 revision: period-of-stay extension and change of status ¥10,000–¥75,000 by period granted (1 year ¥33,000 at the counter, ¥27,330 online), permanent residence ¥200,000. Revenue stamps, employer totals, free JSON API for AI agents. Not legal advice.";
 
 export const metadata: Metadata = {
-  title: { absolute: `${title} · Japan Visa Fee Calculator` },
+  title: { absolute: title },
   description,
   alternates: { canonical: "/" },
+  openGraph: { title, description },
+  twitter: { title, description },
+};
+
+const MOFA_VISA_FEES = "https://www.mofa.go.jp/j_info/visit/visa/procedure/pagewe_000001_00391.html";
+
+/** Counter vs online (incl. processing fee) per band, computed from the fee table. */
+const onlineVsCounter = TIERS.map((t) => {
+  const online = t.onlineJPY + t.onlineProcessingJPY;
+  const diff = t.counterJPY - online;
+  const note = diff > 0 ? `online saves ${yen(diff)}` : diff < 0 ? `online costs ${yen(-diff)} more` : "same";
+  return `${t.label}: counter ${yen(t.counterJPY)} vs online ${yen(online)} (${note})`;
+}).join("; ");
+
+const webAppLd = {
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  name: "Japan Visa Fee Calculator",
+  alternateName: "Japan residence permit fee calculator",
+  url: PUBLIC_URL,
+  applicationCategory: "FinanceApplication",
+  operatingSystem: "Any",
+  isAccessibleForFree: true,
+  offers: { "@type": "Offer", price: "0", priceCurrency: "JPY" },
+  description:
+    "Unofficial, free Japan visa fee calculator for residence permits (extension of period of stay, change of status, permanent residence) under the fee table in force from October 1, 2026, with a keyless JSON API. Educational estimate, not immigration or legal advice.",
 };
 
 const faq: FaqItem[] = [
+  {
+    q: "Is there a Japan visa fee calculator?",
+    a: `Yes, this one: a free, unofficial calculator for Japan's residence permit fees (extension of period of stay, change of status of residence, permanent residence) built from the fee table the Immigration Services Agency (ISA) published for applications received from October 1, 2026. ISA's own pages publish the table and leaflet (${SOURCES[0]}); this site is not affiliated with ISA. It does not cover entry visas issued by embassies abroad.`,
+  },
+  {
+    q: "How much is the Japan visa renewal fee in 2026?",
+    a: "It depends on when the application was received. Received by September 30, 2026: a flat ¥6,000 at the counter (¥5,500 online). Received on or after October 1, 2026: the fee follows the period of stay granted, at the counter ¥10,000 (3 months or less), ¥18,000 (up to 6 months), ¥25,000 (under 1 year), ¥33,000 (1 year), ¥48,000 (over 1 year, under 3 years), ¥64,000 (3 to under 5 years), ¥75,000 (5 years or more). Change of status uses the same table.",
+  },
+  {
+    q: "How much is permanent residency in Japan in 2026?",
+    a: `${yen(PERMANENT.counterJPY)} for permanent residence permission (永住許可) applications received on or after October 1, 2026, paid with revenue stamps (${PERMANENT.stamps.map((s) => s.toLocaleString("en-US")).join(" + ")}) when permission is granted. Applications received by September 30, 2026 pay the old ${yen(PERMANENT.oldCounterJPY)}. ISA's table lists the fee for counter applications.`,
+  },
+  {
+    q: "Online vs counter: which Japan visa fee is cheaper?",
+    a: `Online is cheaper for every band except 3 months or less, once the online payment processing fee (¥330 under 3 years, ¥550 for 3 years or more) is added. ${onlineVsCounter}. Online fees are paid by convenience store or bank only (no card, no QR); counter fees are paid with revenue stamps.`,
+  },
+  {
+    q: "Is the Japan visa fee different by nationality?",
+    a: `Not for the fees this calculator covers. ISA sets residence permit fees (change of status, extension of period of stay, permanent residence) by type of permission and period of stay granted; the fee table has no nationality categories, and the only reduction is for financial hardship combined with humanitarian need. Entry visas issued by Japanese embassies and consulates abroad are a separate fee set by the Ministry of Foreign Affairs (MOFA), which can depend on your nationality and purpose of visit. This tool does not calculate entry visa fees; check MOFA's visa fee page (${MOFA_VISA_FEES}) or the embassy where you apply.`,
+  },
   {
     q: "How much is a Japan visa renewal from October 2026?",
     a: "For applications received on or after October 1, 2026, the fee for an extension of period of stay (在留期間更新) depends on the period granted. At the counter: ¥10,000 (3 months or less), ¥18,000 (up to 6 months), ¥25,000 (under 1 year), ¥33,000 (1 year), ¥48,000 (over 1 year, under 3 years), ¥64,000 (3 to under 5 years), ¥75,000 (5 years or more). Before, it was a flat ¥6,000.",
@@ -62,8 +108,9 @@ export default function HomePage() {
     <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:py-10">
       <section className="max-w-3xl">
         <p className="font-mono text-[11px] tracking-[0.28em] text-amber uppercase">Free · Japan · fees from Oct 1 2026</p>
-        <h1 className="mt-3 font-display text-4xl leading-[1.05] tracking-tight sm:text-6xl">How much is a Japan visa renewal from October 2026?</h1>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
+        <h1 className="mt-3 font-display text-4xl leading-[1.05] tracking-tight sm:text-6xl">Japan visa fee calculator: residence permit fees from October 2026</h1>
+        <p className="mt-4 max-w-2xl text-lg font-medium text-foreground sm:text-xl">How much is a Japan visa renewal from October 2026?</p>
+        <p className="mt-2 max-w-2xl text-base leading-relaxed text-muted sm:text-lg">
           The flat ¥6,000 fee is gone. From October 1, 2026 you pay by the period of stay granted, up to ¥75,000, and ¥200,000 for permanent residence. Pick your case below.
         </p>
       </section>
@@ -129,7 +176,16 @@ export default function HomePage() {
         </p>
       </section>
 
+      <p className="mt-6 max-w-3xl text-sm text-muted">
+        Entry visas (applied for at a Japanese embassy or consulate abroad) are a different fee set by MOFA and are not covered here:{" "}
+        <a className="underline underline-offset-2 hover:text-foreground" href={MOFA_VISA_FEES} target="_blank" rel="noopener noreferrer">
+          MOFA visa fees
+        </a>
+        .
+      </p>
+
       <FaqSection items={faq} heading="Japan visa fee questions" />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppLd).replace(/</g, "\\u003c") }} />
     </div>
   );
 }
