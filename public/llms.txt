@@ -85,5 +85,6 @@ Educational estimate, not immigration or legal advice. ISA decides the period gr
 - Japan Trip Brain: https://japan-trip-brain.vercel.app
 - Japan Luggage Check: https://japan-luggage.vercel.app
 - Kyushu Travel Discount Calculator: https://kyushu-travel-discount.vercel.app
+- Japan Customs Allowance Checker: https://japan-customs-allowance.vercel.app
 - Hotel OTA Calculator: https://hotel-ota-calculator.vercel.app
 - Free Agent Tools MCP: https://free-agent-tools.vercel.app
