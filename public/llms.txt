@@ -86,5 +86,6 @@ Educational estimate, not immigration or legal advice. ISA decides the period gr
 - Japan Luggage Check: https://japan-luggage.vercel.app
 - Kyushu Travel Discount Calculator: https://kyushu-travel-discount.vercel.app
 - Japan Customs Allowance Checker: https://japan-customs-allowance.vercel.app
+- Japan TB Screening Check (JPETS: do Philippine, Nepali, Vietnamese, Indonesian applicants need a TB Clearance Certificate for a COE/visa; Indonesia from 2027-01-04; keyless API): https://japan-tb-screening.vercel.app
 - Hotel OTA Calculator: https://hotel-ota-calculator.vercel.app
 - Free Agent Tools MCP: https://free-agent-tools.vercel.app
