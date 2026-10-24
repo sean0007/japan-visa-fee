@@ -18,6 +18,7 @@ export const SIBLING_TOOLS = [
   { href: "https://japan-dual-pricing.vercel.app", label: "Japan Dual Pricing" },
   { href: "https://japan-alert-decoder.vercel.app", label: "Japan Alert Decoder" },
   { href: "https://japan-pr-check.vercel.app", label: "Japan PR Guideline Check" },
+  { href: "https://japan-reentry-check.vercel.app", label: "Japan Re-entry Deadline Check" },
   { href: "https://japan-intl-postage.vercel.app", label: "Japan International Postage 2027" },
   { href: "https://hotel-ota-calculator.vercel.app", label: "Hotel OTA Calculator" },
   { href: "https://pitch-roast.vercel.app", label: "Pitch Roast" },
