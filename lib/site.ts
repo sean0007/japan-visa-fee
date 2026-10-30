@@ -25,6 +25,7 @@ export const SIBLING_TOOLS = [
   { href: "https://japan-intl-postage.vercel.app", label: "Japan International Postage 2027" },
   { href: "https://hotel-ota-calculator.vercel.app", label: "Hotel OTA Calculator" },
   { href: "https://house-rules-check.vercel.app", label: "House Rules Check" },
+  { href: "https://japan-mynumber-card-check.vercel.app", label: "Japan My Number Card Check" },
   { href: "https://pitch-roast.vercel.app", label: "Pitch Roast" },
   { href: "https://fund-fix-flee.vercel.app", label: "Founder Scorecard" },
   { href: "https://saas-bill-cutter.vercel.app", label: "SaaS Bill Cutter" },
